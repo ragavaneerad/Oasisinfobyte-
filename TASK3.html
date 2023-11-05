@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="https://img.freepik.com/free-psd/3d-icon-weather-conditions-with-freezing-temperature_23-2150108723.jpg?w=740&t=st=1693407361~exp=1693407961~hmac=371e7f18696515aa818c7594dc8eef49811fb6a08e57b8ce2a04ebf9fdfff8f3">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="bg-container">
+        <div class="container">
+            <h1>Temperature Converter</h1>
+            <div class="input-container">
+                <input type="number" id="temperature" placeholder="Enter temperature" required>
+                <select id="unit">
+                    <option value="celsius">Celsius (°C)</option>
+                    <option value="fahrenheit">Fahrenheit (°F)</option>
+                    <option value="kelvin">Kelvin (K)</option>
+                </select>
+            </div>
+            <button class="custom-btn btn-6" id="convert"><span>Convert</span></button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const temperatureInput = document.getElementById("temperature");
+            const unitSelect = document.getElementById("unit");
+            const convertButton = document.getElementById("convert");
+            const resultDiv = document.getElementById("result");
+            const bgContainer = document.getElementById("bg-container");
+
+            convertButton.addEventListener("click", function() {
+                const temperature = parseFloat(temperatureInput.value);
+                const unit = unitSelect.value;
+                let convertedTemperature;
+                let resultUnit;
+
+                if (isNaN(temperature)) {
+                    resultDiv.textContent = "Please enter a valid number.";
+                    return;
+                }
+
+                if (unit === "celsius") {
+                    convertedTemperature = (temperature - 32) * (5 / 9);
+                    resultUnit = "°C";
+                } else if (unit === "fahrenheit") {
+                    convertedTemperature = (temperature * 9 / 5) + 32;
+                    resultUnit = "°F";
+                } else if (unit === "kelvin") {
+                    convertedTemperature = temperature + 273.15;
+                    resultUnit = "K";
+                }
+
+                resultDiv.textContent = `Converted Temperature: ${convertedTemperature.toFixed(2)} ${resultUnit}`;
+
+                // Change background image based on temperature
+                if (convertedTemperature < 0) {
+                    bgContainer.style.backgroundImage = "url('https://img.freepik.com/free-photo/3d-snowy-winter-landscape_1048-11056.jpg?w=740&t=st=1693404438~exp=1693405038~hmac=17b71d58b9b8e09e089b7c58415ac95f931e3149b0f216f2d684d6ac83ceba3f')";
+                } else if (convertedTemperature >= 0 && convertedTemperature <= 20) {
+                    bgContainer.style.backgroundImage = "url('https://img.freepik.com/free-photo/beautiful-scenery-summit-mount-everest-covered-with-snow-white-clouds_181624-21317.jpg?w=1060&t=st=1693404080~exp=1693404680~hmac=43e63865cfe1ef8c1e889990e766c778afd8859db01a7b9101aa0a39b9cb0941')";
+                } else {
+                    bgContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/gradient-summer-background-videocalls_52683-63099.jpg?w=1060&t=st=1693404108~exp=1693404708~hmac=ee13f30629c0880f8a6bff0a225f2c0954f35fc1c3ee622fa287ac130dffdedd')";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
